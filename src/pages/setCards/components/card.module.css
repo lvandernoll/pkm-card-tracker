@@ -1,0 +1,65 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  position: relative;
+  box-shadow: 0 0 10px lightgrey;
+  border-radius: 15px;
+}
+
+.card:not(:last-of-type) {
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
+.image {
+  border-radius: 15px;
+}
+
+.image, .count {
+  transition: .2s filter;
+}
+
+.card.grey .image, .card.grey .count {
+  filter: grayscale(1);
+}
+
+.count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 15%;
+  background-color: #fec107;
+  height: 20%;
+  font-weight: bold;
+  font-size: 1.5rem;
+  border-radius: 0 15px 0 15px;
+}
+
+.button {
+  transition: .2s background-color;
+  height: 50px !important;
+  width: 50px !important;
+  position: absolute;
+  bottom: 20%;
+  cursor: pointer;
+  background-color: #01aaf6;
+  color: white;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.button:hover {
+  background-color: darkblue;
+}
+
+.buttonLeft {
+  left: 10%;
+}
+
+.buttonRight {
+  right: 10%;
+}

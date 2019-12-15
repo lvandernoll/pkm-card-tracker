@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import SetListPage from 'pages/setList';
+import SetCardsPage from 'pages/setCards';
+import styles from './App.module.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+const App = () =>
+  <BrowserRouter className={styles.app}>
+    <div className={styles.app}>
+      <header className={styles.header}>
+        Header
       </header>
+      <main className={styles.main}>
+        <Switch>
+          <Route exact path='/:set'>
+            <SetCardsPage />
+          </Route>
+          <Route path='/'>
+            <SetListPage />
+          </Route>
+        </Switch>
+      </main>
+      <footer className={styles.footer}>
+        Footer
+      </footer>
     </div>
-  );
-}
+  </BrowserRouter>;
 
 export default App;

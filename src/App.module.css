@@ -1,0 +1,25 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  background: white
+}
+
+.header {
+  height: 50px;
+  width: 100%;
+  padding: 10px 50px;
+  background: white;
+}
+
+.main {
+  padding: 30px 15px;
+}
+
+.footer {
+  height: 35px;
+  padding: 10px 50px;
+  width: 100%;
+  background: white;
+}
