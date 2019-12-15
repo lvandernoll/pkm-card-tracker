@@ -9,7 +9,7 @@
 
 .image {
   border-radius: 15px;
-  max-height: 342px;
+  height: 342px;
 }
 
 .image, .count {
