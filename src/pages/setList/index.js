@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import sets from 'data/sets.json';
-import styles from './setList.module.css';
+import styles from './setList.module.scss';
 
 const SetListPage = () =>
   <section className={styles.page}>

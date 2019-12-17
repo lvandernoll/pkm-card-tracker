@@ -15,7 +15,12 @@
 
 .main {
   padding: 30px 15px;
+
+  @media only screen and (max-width: 640px) {
+    padding: 10px;
+  }
 }
+
 
 .footer {
   height: 35px;

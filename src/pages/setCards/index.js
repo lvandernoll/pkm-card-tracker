@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import styles from './setCards.module.css';
+import styles from './setCards.module.scss';
 import Card from './components/card';
 
 class SetCardsPage extends Component {

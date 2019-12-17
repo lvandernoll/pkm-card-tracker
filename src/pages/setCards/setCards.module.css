@@ -1,7 +1,0 @@
-.page {
-  width: 100%;
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(auto-fill, 250px);
-  justify-content: center;
-}

@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import SetListPage from 'pages/setList';
 import SetCardsPage from 'pages/setCards';
-import styles from './App.module.css';
+import styles from './App.module.scss';
 
 const App = () =>
   <BrowserRouter className={styles.app}>

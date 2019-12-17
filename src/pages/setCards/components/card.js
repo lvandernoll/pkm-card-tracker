@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
-import styles from './card.module.css';
+import styles from './card.module.scss';
 
 class Card extends Component {
   constructor(props) {
@@ -30,7 +30,7 @@ class Card extends Component {
       <article className={`${styles.card} ${count === 0 ? styles.grey : ''}`}>
         <img className={styles.image} alt='' src={card.imageUrl} />
         <div className={styles.count}>{count}</div>
-        <FontAwesomeIcon className={`${styles.button} ${styles.buttonLeft}`} icon={faMinus} onClick={this.removeCard} />
+        {count !== 0 && <FontAwesomeIcon className={`${styles.button} ${styles.buttonLeft}`} icon={faMinus} onClick={this.removeCard} />}
         <FontAwesomeIcon className={`${styles.button} ${styles.buttonRight}`} icon={faPlus} onClick={this.addCard} />
       </article>
     );

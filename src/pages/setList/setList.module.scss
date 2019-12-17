@@ -18,10 +18,10 @@
   border-radius: 15px;
   padding: 10px;
   height: 100%;
-}
 
-.set:hover {
-  transform: scale(1.08);
+  &:hover {
+    transform: scale(1.08);
+  }
 }
 
 .image {
