@@ -1,0 +1,159 @@
+$white: #fff;
+$main: #20519d;
+$grey: grey;
+$light-grey: lightgrey;
+$disabled-grey: darkgrey;
+$disabled-cursor: disabled;
+$error-font-size: 1rem;
+$error: red;
+
+.button:not(.no-style) {
+  outline: none;
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: .95rem;
+  font-weight: bold;
+  transition: .2s transform ease-out;
+  color: $white;
+  background-color: $main;
+  border: 2px solid $main;
+  border-radius: 3px;
+  width: 100%;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+
+  &.alt {
+    color: $main;
+    background-color: $white;
+  }
+
+  &:hover, &:focus {
+    text-decoration: none;
+    transform: scale(1.1);
+  }
+
+  &:disabled, &.disabled {
+    color: $grey;
+    border-color: $light-grey;
+    background-color: $disabled-grey;
+
+    &:hover {
+      transform: none;
+      cursor: $disabled-cursor;
+    }
+  }
+}
+
+button {
+  @extend .button;
+
+  &.noStyle {
+    border: none;
+    background: none;
+    padding: 0;
+    display: block;
+  }
+}
+
+.inputWrapper {
+  display: block;
+  margin: 20px 0;
+
+  label.label, span.label {
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  > span.errorLabel {
+    display: block;
+    font-size: $error-font-size;
+    margin-top: 5px;
+    color: $error;
+    max-width: 100%;
+  }
+
+  .input {
+    width: 100%;
+    margin-bottom: errorFontHeight(5px);
+
+    &.error {
+      margin-bottom: 0;
+
+      &:focus {
+        margin-bottom: errorFontHeight(5px);
+      }
+    }
+  }
+}
+
+.input {
+  outline: none;
+  border: 2px solid $light-grey;
+  border-radius: 3px;
+  padding: 10px;
+  background: $white;
+  font-size: 1rem;
+  
+  &.error {
+    border-color: $error;
+  }
+
+  &:focus {
+    border-color: $main;
+
+    ~ .errorLabel {
+      display: none;
+    }
+  }
+  
+  &:read-only {
+    background-color: $disabled-grey;
+    border-color: $light-grey;
+    cursor: $disabled-cursor;
+    color: $grey;
+    z-index: 4;
+  }
+
+  &::placeholder {
+    color: $light-grey;
+  }
+}
+
+input[type="text"], input[type="email"], input[type="tel"] {
+  @extend .input;
+}
+
+input[data-type="password"] {
+  @extend .input;
+  padding-right: 30px;
+
+  &:read-only + .passwordUnmaskIcon {
+    cursor: $disabled-cursor;
+    color: $light-grey;
+  }
+}
+
+.passwordUnmask {
+  position:relative;
+
+  &Icon {
+    position: absolute;
+    width: 19.3px !important;
+    right: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    color: $light-grey;
+    z-index: 0;
+  };
+
+  &:hover &Icon {
+    color: $main;
+  }
+
+  &.active &Icon {
+    width: 20px !important;
+  }
+}

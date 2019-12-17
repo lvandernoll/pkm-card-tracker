@@ -13,7 +13,7 @@ class SetCardsPage extends Component {
 
   componentDidMount = () => {
     try {
-      const cards = require(`data/cards${this.props.location.pathname}.json`);
+      const cards = require(`data/cards/${this.props.location.pathname.split('/set/').join('')}.json`);
       if(cards) this.setState({ cards });
     } catch (e) {
       this.props.history.goBack();

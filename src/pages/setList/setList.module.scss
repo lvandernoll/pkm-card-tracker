@@ -5,6 +5,14 @@
   grid-template-columns: repeat(auto-fill, 220px);
   grid-auto-rows: 1fr;
   justify-content: center;
+
+  @media only screen and (max-width: 1040px) {
+    grid-template-columns: repeat(auto-fill, 120px);
+  }
+
+  @media only screen and (max-width: 640px) {
+    grid-template-columns: repeat(auto-fill, 100px);
+  }
 }
 
 .set {
@@ -14,7 +22,7 @@
   align-items: center;
   justify-content: center;
   width: 220px;
-  box-shadow: 0 0 10px lightgrey;
+  box-shadow: 0 0 10px #20519d;
   border-radius: 15px;
   padding: 10px;
   height: 100%;
@@ -22,12 +30,25 @@
   &:hover {
     transform: scale(1.08);
   }
+
+  @media only screen and (max-width: 1040px) {
+    zoom: .5;
+  }
+
+  @media only screen and (max-width: 640px) {
+    zoom: .45;
+  }
 }
 
 .image {
   max-height: 120px;
   max-width: 200px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+}
+
+.name {
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 .percentage {
