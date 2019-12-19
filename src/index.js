@@ -13,7 +13,7 @@ import 'index.scss';
 const stateLoader = new StateLoader();
 
 const reducer = combineReducers(reducers.default);
-const enhancer = compose(applyMiddleware(thunkMiddleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const enhancer = compose(applyMiddleware(thunkMiddleware), window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() : f => f);
 const store = createStore(reducer, stateLoader.loadState(), enhancer);
 
 store.subscribe(() => {
