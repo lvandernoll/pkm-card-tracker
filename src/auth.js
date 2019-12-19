@@ -9,7 +9,7 @@ const locationHelper = locationHelperBuilder({});
 const userIsAuthenticatedDefaults = {
   authenticatedSelector: state => state.user.data !== null,
   authenticatingSelector: state => state.user.isLoading,
-  wrapperDisplayName: 'UserIsAuthenticated'
+  wrapperDisplayName: 'UserIsAuthenticated',
 };
 
 export const userIsAuthenticated = connectedAuthWrapper(userIsAuthenticatedDefaults);
@@ -17,7 +17,7 @@ export const userIsAuthenticated = connectedAuthWrapper(userIsAuthenticatedDefau
 export const userIsAuthenticatedRedir = connectedRouterRedirect({
   ...userIsAuthenticatedDefaults,
   AuthenticatingComponent: Loading,
-  redirectPath: '/login'
+  redirectPath: '/login',
 });
 
 export const userIsAdminRedir = connectedRouterRedirect({

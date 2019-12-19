@@ -1,32 +1,30 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Link, withRouter } from 'react-router-dom';
+import { userIsAuthenticatedRedir, userIsNotAuthenticatedRedir, userIsAuthenticated } from 'auth';
+import { logout } from 'actions/user';
+
+// Styling
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import { logout } from 'actions/user';
-import { userIsAuthenticatedRedir, userIsNotAuthenticatedRedir, userIsAdminRedir,
-         userIsAuthenticated, userIsNotAuthenticated } from 'auth';
+import styles from './App.module.scss';
 
+// Pages
 import SetListPage from 'pages/setList';
 import SetCardsPage from 'pages/setCards';
 import LoginPage from 'pages/login';
-import styles from './App.module.scss';
 
+// Set up components with authentication
 const Login = withRouter(userIsNotAuthenticatedRedir(LoginPage));
 const SetList = withRouter(userIsAuthenticatedRedir(SetListPage));
 const SetCards = withRouter(userIsAuthenticatedRedir(SetCardsPage));
+const LogoutLink = userIsAuthenticated(({ logout }) => <FontAwesomeIcon className={styles.headerIcon} icon={faUser} onClick={() => logout()} />);
 
-const getUserName = user => user.data ? user.data.name : null;
-
-const LoginLink = userIsNotAuthenticated(() => <Link to='/login'><FontAwesomeIcon className={styles.headerIcon} icon={faUser} /></Link>);
-const LogoutLink = userIsAuthenticated(({ logout }) => <a href='#' onClick={() => logout()}><FontAwesomeIcon className={styles.headerIcon} icon={faUser} /></a>);
-
-const App = ({user, logout}) =>
+const App = ({ logout }) =>
   <BrowserRouter className={styles.app}>
     <div className={styles.app}>
       <header className={styles.header}>
         <Link to='/'><h1>Pokémon Card Tracker</h1></Link>
-        <LoginLink />
         <LogoutLink logout={logout} />
       </header>
       <main className={styles.main}>
@@ -46,6 +44,4 @@ const App = ({user, logout}) =>
     </div>
   </BrowserRouter>;
 
-const mapStateToProps = state => ({ user: state.user });
-
-export default connect(mapStateToProps, { logout })(App);
+export default connect(state => ({ user: state.user }), { logout })(App);
