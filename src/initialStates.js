@@ -1,8 +1,8 @@
 const user = {
   data: null,
-  isLoading: false
+  isLoading: false,
 };
 
-export { 
+export {
   user,
 };
