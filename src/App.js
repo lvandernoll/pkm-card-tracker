@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, Link, withRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, withRouter } from 'react-router-dom';
 import { userIsAuthenticatedRedir, userIsNotAuthenticatedRedir, userIsAuthenticated } from 'auth';
 import { logout } from 'actions/user';
 
@@ -21,7 +21,7 @@ const SetCards = withRouter(userIsAuthenticatedRedir(SetCardsPage));
 const LogoutLink = userIsAuthenticated(({ logout }) => <FontAwesomeIcon className={styles.headerIcon} icon={faUser} onClick={() => logout()} />);
 
 const App = ({ logout }) =>
-  <BrowserRouter className={styles.app}>
+  <Router className={styles.app}>
     <div className={styles.app}>
       <header className={styles.header}>
         <Link to='/'><h1>Pokémon Card Tracker</h1></Link>
@@ -42,6 +42,6 @@ const App = ({ logout }) =>
       </main>
       <footer className={styles.footer} />
     </div>
-  </BrowserRouter>;
+  </Router>;
 
 export default connect(state => ({ user: state.user }), { logout })(App);

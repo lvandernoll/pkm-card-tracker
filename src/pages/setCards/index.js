@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import styles from './setCards.module.scss';
 import Card from './components/card';
 
@@ -31,4 +30,4 @@ class SetCardsPage extends Component {
   }
 }
 
-export default connect( state => ({ authData: state.user.data }))(SetCardsPage);
+export default SetCardsPage;

@@ -55,4 +55,4 @@ class LoginPage extends Component {
     </form>
 };
 
-export default connect(null, { login })(LoginPage)
+export default connect(null, { login })(LoginPage);

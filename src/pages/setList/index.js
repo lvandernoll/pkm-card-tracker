@@ -1,10 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import sets from 'data/sets.json';
 import styles from './setList.module.scss';
 
-const SetListPage = ({ authData }) =>
+const SetListPage = () =>
   <section className={styles.page}>
     {sets.map((set, i) =>
       <Link key={i} to={`/set/${set.name}`}>
@@ -18,5 +17,4 @@ const SetListPage = ({ authData }) =>
     )}
   </section>;
 
-export default connect( state => ({ authData: state.user.data }))(SetListPage);
-
+export default SetListPage;
