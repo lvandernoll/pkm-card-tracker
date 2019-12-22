@@ -1,7 +1,7 @@
 ## Usage
-To retrieve all (legal) sets and its cards, run `node getAll`  
-To retrieve all (legal) sets, run `node getSets`  
-To retrieve all cards within a set, run `node getCardsInSet <setname>` where `<setname>` is the exact name of the set (i.e. `Cosmic Eclipse`)
+To retrieve all (legal) sets, run `node getSets` (for frontend only)  
+To retrieve all legal sets and its cards, run `node getAllLegal`  
+To retrieve a set and all cards within, run `node getSetCards <setname>` where `<setname>` is the exact name of the set (i.e. `Cosmic Eclipse`)
 
 ## Technical Specifications
 This section contains information about what data we save and write to the json files (need) and what data can furthermore be implemented when necessary (have).

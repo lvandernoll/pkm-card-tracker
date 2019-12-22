@@ -12,9 +12,3 @@ export function logout() {
     type: constants.USER_LOGGED_OUT
   }
 };
-
-export function loggingIn() {
-  return {
-    type: constants.USER_LOGGING_IN
-  }
-};

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import { loggingIn, login, logout } from 'actions/user';
+import { login } from 'actions/user';
+import Button from 'components/button';
 import form from 'styles/form.module.scss';
 import styles from './login.module.scss';
 
@@ -14,6 +15,9 @@ class LoginPage extends Component {
       unmaskIcon: faEye,
       name: '',
       password: '',
+      isLoading: false,
+      incorrectForm: false,
+      systemError: false,
     };
   }
 
@@ -31,13 +35,12 @@ class LoginPage extends Component {
     }
   }
 
-  onChange = e => this.setState({ [e.currentTarget.id]: e.currentTarget.value });
+  onChange = e => this.setState({ [e.currentTarget.id]: e.currentTarget.value, incorrectForm: false });
 
   onSubmit = e => {
     e.preventDefault();
+    this.setState({ isLoading: true });
     const { name, password } = this.state;
-    this.props.loggingIn();
-    e.preventDefault();
     fetch(`${process.env.REACT_APP_API_URL}/login/`, {
       method: 'POST',
       headers: {
@@ -49,13 +52,14 @@ class LoginPage extends Component {
     .then(response => response.json().then(responseJson => {
       if(response.status === 200) this.props.login(responseJson);
       else {
+        this.setState({ incorrectForm: true });
         console.error(responseJson);
-        this.props.logout();
       }
+      this.setState({ isLoading: false });
     }))
     .catch(e => {
       console.error(e);
-      this.props.logout();
+      this.setState({ isLoading: false, systemError: true });
     });
   }
 
@@ -64,17 +68,19 @@ class LoginPage extends Component {
       <h2>Login</h2>
       <label className={form.inputWrapper} htmlFor='name'>
         <span className={form.label}>Name</span>
-        <input type='text' id='name' value={this.state.name} onChange={this.onChange} />
+        <input type='text' id='name' value={this.state.name} required onChange={this.onChange} className={this.state.incorrectForm ? form.error : ''} />
       </label>
       <label className={form.inputWrapper} htmlFor='password'>
         <span className={form.label}>Wachtwoord</span>
-        <input type='password' id='password' data-type='password' value={this.state.password} onChange={this.onChange} />
+        <input type='password' id='password' data-type='password' value={this.state.password} required onChange={this.onChange} className={this.state.incorrectForm ? form.error : ''} />
         <i onClick={this.unmaskPassword} className={form.passwordUnmask}>
           <FontAwesomeIcon className={form.passwordUnmaskIcon} icon={this.state.unmaskIcon} />
         </i>
       </label>
-      <button type='submit'>Verstuur</button>
+      {this.state.incorrectForm && <span className={form.errorLabel}>Incorrecte inloggegevens</span>}
+      {this.state.systemError && <span className={form.errorLabel}>Er is een systeemfout opgetreden</span>}
+      <Button type='submit' isLoading={this.state.isLoading}>Verstuur</Button>
     </form>
 };
 
-export default connect(null, { loggingIn, login, logout })(LoginPage);
+export default connect(null, { login })(LoginPage);
