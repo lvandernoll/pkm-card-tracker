@@ -23,7 +23,7 @@ class LoginPage extends Component {
 
   unmaskPassword = e => {
     const input = this.refs.password;
-    if(!input.hasAttribute('readonly')) {
+    if(input && !input.hasAttribute('readonly')) {
       e.currentTarget.classList.toggle('active');
       if(input.getAttribute('type') === 'password') {
         input.setAttribute('type', 'text');
@@ -50,12 +50,15 @@ class LoginPage extends Component {
       body: JSON.stringify({ name, password }),
     })
     .then(response => response.json().then(responseJson => {
-      if(response.status === 200) this.props.login(responseJson);
+      if(response.status === 200) {
+        this.setState({ isLoading: false });
+        this.props.login(responseJson);
+      }
       else {
         this.setState({ incorrectForm: true });
         console.error(responseJson);
+        this.setState({ isLoading: false });
       }
-      this.setState({ isLoading: false });
     }))
     .catch(e => {
       console.error(e);
@@ -72,7 +75,7 @@ class LoginPage extends Component {
       </label>
       <label className={form.inputWrapper} htmlFor='password'>
         <span className={form.label}>Wachtwoord</span>
-        <input type='password' id='password' data-type='password' value={this.state.password} required onChange={this.onChange} className={this.state.incorrectForm ? form.error : ''} />
+        <input ref='password' type='password' id='password' data-type='password' value={this.state.password} required onChange={this.onChange} className={this.state.incorrectForm ? form.error : ''} />
         <i onClick={this.unmaskPassword} className={form.passwordUnmask}>
           <FontAwesomeIcon className={form.passwordUnmaskIcon} icon={this.state.unmaskIcon} />
         </i>

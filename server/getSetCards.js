@@ -33,6 +33,7 @@ fetch(`https://api.pokemontcg.io/v1/sets?name=${setName}`)
       cardsArray.push({
         name: card.name,
         imageUrl: card.imageUrl,
+        imageUrlHiRes: card.imageUrlHiRes,
         types: card.types,
         supertype: card.supertype,
         number: card.number,

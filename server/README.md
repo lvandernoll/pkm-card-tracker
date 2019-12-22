@@ -9,11 +9,10 @@ This section contains information about what data we save and write to the json 
 What do we need?
 ```json
 {
-  "ptcgoCode": "CEC",
+  "code": "CEC",
   "name": "Cosmic Eclipse",
   "series": "Sun & Moon",
   "totalCards": 236,
-  "standardLegal": true,
   "symbolUrl": "https://images.pokemontcg.io/sm12/symbol.png",
   "logoUrl": "https://images.pokemontcg.io/sm12/logo.png"
 }
