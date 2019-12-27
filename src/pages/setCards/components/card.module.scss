@@ -53,13 +53,13 @@
   height: 50px !important;
   width: 50px !important;
   position: absolute;
-  bottom: 20%;
   cursor: pointer;
   background-color: #20519d;
   color: white;
   padding: 15px;
   border-radius: 50%;
   user-select: none;
+  bottom: 20%;
 
   &:hover {
     background-color: darken(#20519d, 20%);
@@ -77,6 +77,26 @@
   &Right {
     right: 10%;
   }
+
+  &Big {
+    z-index: 103;
+    bottom: 10%;
+    height: 100px !important;
+    width: 100px !important;
+    padding: 25px;
+
+    @media only screen and (max-width: 640px) {
+      zoom: .7;
+    }
+
+    &Left {
+      left: 10%;
+    }
+
+    &Right {
+      Right: 10%;
+    }
+  }
 }
 
 .detail {
@@ -93,7 +113,7 @@
     left: 0;
     padding: 35px 10px;
     text-align: center;
-    
+
     @media only screen and (max-width: 640px) {
       flex-direction: column;
       overflow-y: auto;
@@ -102,17 +122,28 @@
   }
 
   &Img {
-    height: 80%;
-    z-index: 102;
-    border-radius: 15px;
-    box-shadow: 10px 0 5px -2px lightgrey;
-    background: white;
+    &Wrapper {
+      position: relative;
+      display: inline-flex;
+      height: 80%;
+      box-shadow: 10px 0 5px -2px lightgrey;
+      z-index: 102;
+      border-radius: 15px;
+      background: white;
+
+      @media only screen and (max-width: 640px) {
+        width: 80%;
+        height: auto;
+        margin: 0 auto;
+        box-shadow: 0 10px 5px -2px lightgrey;
+      }
+    }
+
+    height: 100%;
 
     @media only screen and (max-width: 640px) {
-      width: 80%;
+      width: 100%;
       height: auto;
-      margin: 0 auto;
-      box-shadow: 0 10px 5px -2px lightgrey;
     }
   }
 
@@ -127,6 +158,7 @@
     z-index: 101;
     overflow-y: auto;
     border-radius: 0 15px 15px 0;
+    text-align: left;
 
     @media only screen and (max-width: 640px) {
       height: unset;
@@ -165,6 +197,20 @@
       margin: 0 auto;
       box-shadow: 0 10px 5px -2px lightgrey;
     }
+  }
+}
+
+.action {
+  &Title {
+    font-weight: bold;
+  }
+
+  &Wrapper {
+    margin-top: 25px;
+  }
+
+  &Item {
+    margin-top: 10px;
   }
 }
 
