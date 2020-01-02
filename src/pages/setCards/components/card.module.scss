@@ -5,7 +5,7 @@
   width: 250px;
   height: 340px;
   position: relative;
-  box-shadow: 0 0 10px lightgrey;
+  box-shadow: 0 0 10px rgba(black, .2);
   border-radius: 15px;
 
   @media only screen and (max-width: 1040px) {
@@ -126,7 +126,7 @@
       position: relative;
       display: inline-flex;
       height: 80%;
-      box-shadow: 10px 0 5px -2px lightgrey;
+      box-shadow: 10px 0 5px -2px rgba(black, .2);
       z-index: 102;
       border-radius: 15px;
       background: white;
@@ -135,7 +135,7 @@
         width: 80%;
         height: auto;
         margin: 0 auto;
-        box-shadow: 0 10px 5px -2px lightgrey;
+        box-shadow: 0 10px 5px -2px rgba(black, .2);
       }
     }
 
@@ -148,6 +148,7 @@
   }
 
   &Info {
+    position: relative;
     display: flex;
     flex-direction: column;
     background: white;
@@ -155,7 +156,7 @@
     width: 40%;
     margin-left: -20px;
     padding: 20px 20px 20px 40px;
-    z-index: 101;
+    z-index: 90;
     overflow-y: auto;
     border-radius: 0 15px 15px 0;
     text-align: left;
@@ -166,6 +167,39 @@
       width: 80%;
       margin: -20px auto 0 auto;
       border-radius: 0 0 15px 15px;
+    }
+  }
+
+  &Name {
+    font-size: 2rem;
+    width: 100%;
+    display: block;
+    padding-right: 50px;
+  }
+
+  &Amount {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    background-color: #fec107;
+    height: 75px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    border-radius: 0 15px 0 15px;
+
+    @media only screen and (max-width: 640px) {
+      border-radius: 0 0 0 15px;
+      height: 88px;
+      padding-top: 10px;
+      z-index: 103;
+
+      &.noBorder {
+        border-radius: 0;
+      }
     }
   }
 }
@@ -186,7 +220,7 @@
     height: 80%;
     z-index: 102;
     border-radius: 15px;
-    box-shadow: 10px 0 5px -2px lightgrey;
+    box-shadow: 10px 0 5px -2px rgba(black, .2);
     background: white;
     min-width: 350px;
 
@@ -211,6 +245,17 @@
 
   &Item {
     margin-top: 10px;
+    display: grid;
+    grid-template-columns: 40% 20% 40%;
+
+    li:nth-child(2) {
+      text-align: center;
+      color: #20519d;
+    }
+
+    li:last-child {
+      text-align: right;
+    }
   }
 }
 

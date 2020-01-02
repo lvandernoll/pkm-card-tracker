@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faMinus, faSpinner, faHandPaper, faHandPointLeft } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faMinus, faSpinner, faHandPaper, faHandPointLeft, faQuestion } from '@fortawesome/free-solid-svg-icons';
 import styles from './card.module.scss';
 
 class Card extends Component {
@@ -73,6 +73,38 @@ class Card extends Component {
 
   onDetailLoad = () => this.setState({ detailedImgLoaded: true });
 
+  formatTime = stamp => {
+    const date = new Date(stamp);
+    let day = date.getDate();
+    day = day < 10 ? `0${day}` : day;
+    let month = date.getMonth() + 1;
+    month = month < 10 ? `0${month}` : month;
+    return `${day}-${month}-${date.getFullYear()}`;
+  };
+
+  formatActionIcon = action => {
+    console.log(action);
+    let icon;
+    switch(action) {
+      case 'ADD':
+        icon = faPlus;
+        break;
+      case 'REMOVE':
+        icon = faMinus;
+        break;
+      case 'LOAN':
+        icon = faHandPaper;
+        break;
+      case 'HAND_IN':
+        icon = faHandPointLeft;
+        break;
+      default:
+        icon = faQuestion;
+        break;
+    }
+    return <FontAwesomeIcon icon={icon} />
+  }
+
   render = () => {
     const { card, count, detailLoaded } = this.state;
 
@@ -93,21 +125,18 @@ class Card extends Component {
               <FontAwesomeIcon className={`${styles.button} ${styles.buttonBig} ${styles.buttonBigRight}`} icon={faHandPointLeft} onClick={() => this.action('hand-in')} />
             </div>
             <div className={styles.detailInfo}>
-              <ul>
-                <li>Name: {card.name}</li>
-                <li>Number: {card.number}</li>
-                <li>Amount: {card.total_cards}</li>
-                {card.types && <li>Types: {card.types.join(', ')}</li>}
-                <li>Supertype: {card.supertype}</li>
-                <li>Rarity: {card.rarity}</li>
-              </ul>
-              {detailLoaded && <div className={styles.actionWrapper}>
+              <div>
+                <span className={styles.detailName}>{card.name}#{card.number}</span>
+                <div className={`${styles.detailAmount} ${detailLoaded && card.actions.length < 1 ? styles.noBorder : ''}`}>{card.total_cards}</div>
+                <span>{card.rarity}</span>
+              </div>
+              {(detailLoaded && card.actions.length > 0) && <div className={styles.actionWrapper}>
                 <span className={styles.actionTitle}>Actions</span>
                 <ul>
                   {card.actions.map((action, i) => <ul key={i} className={styles.actionItem}>
-                    <li>Name: {action.name}</li>
-                    <li>Action: {action.action}</li>
-                    <li>Timestamp: {action.timestamp}</li>
+                    <li>{action.name}</li>
+                    <li>{this.formatActionIcon(action.action)}</li>
+                    <li>{this.formatTime(action.timestamp)}</li>
                   </ul>)}
                 </ul>
               </div>}
