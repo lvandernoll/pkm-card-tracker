@@ -15,16 +15,17 @@ class SetCardsPage extends Component {
   }
 
   componentDidMount = async () => {
+    const setName = this.props.location.pathname.split('/set/').join('');
     let cards;
     try {
-      cards = await require(`data/${this.props.location.pathname.split('/set/').join('')}.json`);
+      cards = await require(`data/${setName}.json`);
       if(cards) cards = cards.cards;
     } catch (e) {
       this.props.history.goBack();
     }
 
     this.setState({ isLoading: true });
-    fetch(`${process.env.REACT_APP_API_URL}/set/1`, { // CHANGE THIS ID TO A NAME EVENTUALLY
+    fetch(`${process.env.REACT_APP_API_URL}/set/${setName}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

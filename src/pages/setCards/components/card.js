@@ -18,7 +18,7 @@ class Card extends Component {
   }
 
   action = actionName => {
-    fetch(`${process.env.REACT_APP_API_URL}/set/${this.props.set}/${this.state.card.id}/`, {
+    fetch(`${process.env.REACT_APP_API_URL}/set/${this.props.set}/${this.state.card.number}/`, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -31,13 +31,18 @@ class Card extends Component {
       if(response.status === 204) {
         switch(actionName) {
           case 'add': 
-            this.setState({ count: this.state.count + 1 });
-            break;
+          this.setState({ count: this.state.count + 1 });
+          break;
           case 'remove':
-          case 'loan':
             this.setState({ count: this.state.count - 1 });
             break;
           default:
+        }
+        if(this.state.detailLoaded) {
+          const newCard = this.state.card;
+          const date = new Date().toISOString();
+          newCard.actions = [...newCard.actions, ...[{name: this.props.user.data.name, action: actionName.toUpperCase(), timestamp: date}]];
+          this.setState({ card: newCard });
         }
       }
       else response.json().then(responseJson => console.error(responseJson));
@@ -83,7 +88,6 @@ class Card extends Component {
   };
 
   formatActionIcon = action => {
-    console.log(action);
     let icon;
     switch(action) {
       case 'ADD':
@@ -95,7 +99,7 @@ class Card extends Component {
       case 'LOAN':
         icon = faHandPaper;
         break;
-      case 'HAND_IN':
+      case 'RETURN':
         icon = faHandPointLeft;
         break;
       default:
@@ -122,12 +126,12 @@ class Card extends Component {
               {!this.state.detailedImgLoaded && <div className={styles.spinnerWrapper}><FontAwesomeIcon className={styles.spinner} icon={faSpinner} /></div>}
               <img className={`${styles.detailImg} ${this.state.detailedImgLoaded ? '' : styles.hidden}`} src={card.imageUrlHiRes} alt='detail' onLoad={this.onDetailLoad} />
               {count !== 0 && <FontAwesomeIcon className={`${styles.button} ${styles.buttonBig} ${styles.buttonBigLeft}`} icon={faHandPaper} onClick={() => this.action('loan')} />}
-              <FontAwesomeIcon className={`${styles.button} ${styles.buttonBig} ${styles.buttonBigRight}`} icon={faHandPointLeft} onClick={() => this.action('hand-in')} />
+              <FontAwesomeIcon className={`${styles.button} ${styles.buttonBig} ${styles.buttonBigRight}`} icon={faHandPointLeft} onClick={() => this.action('return')} />
             </div>
             <div className={styles.detailInfo}>
               <div>
                 <span className={styles.detailName}>{card.name}#{card.number}</span>
-                <div className={`${styles.detailAmount} ${detailLoaded && card.actions.length < 1 ? styles.noBorder : ''}`}>{card.total_cards}</div>
+                <div className={`${styles.detailAmount} ${detailLoaded && card.actions.length < 1 ? styles.noBorder : ''}`}>{this.state.count}</div>
                 <span>{card.rarity}</span>
               </div>
               {(detailLoaded && card.actions.length > 0) && <div className={styles.actionWrapper}>
