@@ -41,7 +41,28 @@ class Card extends Component {
         if(this.state.detailLoaded) {
           const newCard = this.state.card;
           const date = new Date().toISOString();
-          newCard.actions = [...newCard.actions, ...[{name: this.props.user.data.name, action: actionName.toUpperCase(), timestamp: date}]];
+          const userName = this.props.user.data.name;
+          newCard.actions = [...newCard.actions, ...[{name: userName, action: actionName.toUpperCase(), timestamp: date}]];
+          let loan;
+          switch(actionName) {
+            case 'loan':
+              loan = newCard.loans.find(obj => obj.name === userName);
+              if(loan) loan.amount = loan.amount + 1;
+              else {
+                loan = {name: userName, amount: 1};
+                newCard.loans.push(loan);
+              }
+              break;
+            case 'return':
+              loan = newCard.loans.find(obj => obj.name === userName);
+              loan.amount = loan.amount - 1;
+              if(loan.amount === 0) {
+                const i = newCard.loans.indexOf(loan);
+                newCard.loans.splice(i, 1);
+              }
+              break;
+            default:
+          }
           this.setState({ card: newCard });
         }
       }
@@ -134,16 +155,42 @@ class Card extends Component {
                 <div className={`${styles.detailAmount} ${detailLoaded && card.actions.length < 1 ? styles.noBorder : ''}`}>{this.state.count}</div>
                 <span>{card.rarity}</span>
               </div>
-              {(detailLoaded && card.actions.length > 0) && <div className={styles.actionWrapper}>
-                <span className={styles.actionTitle}>Actions</span>
-                <ul>
-                  {card.actions.map((action, i) => <ul key={i} className={styles.actionItem}>
-                    <li>{action.name}</li>
-                    <li>{this.formatActionIcon(action.action)}</li>
-                    <li>{this.formatTime(action.timestamp)}</li>
-                  </ul>)}
-                </ul>
-              </div>}
+              {(detailLoaded && card.actions.length > 0) &&
+                <div className={styles.actionWrapper}>
+                  <div className={styles.actionTotalWrapper}>
+                    {card.additions.length > 0 &&
+                      <div className={styles.actionTotal}>
+                        <span className={styles.actionTitle}>Op voorraad</span>
+                        <ul>
+                          {card.additions.map((addition, i) => <ul key={i} className={styles.actionTotalItem}>
+                            <li>{addition.name}</li>
+                            <li>{addition.amount}</li>
+                          </ul>)}
+                        </ul>
+                      </div>
+                    }
+                    {card.loans.length > 0 &&
+                      <div className={styles.actionTotal}>
+                        <span className={styles.actionTitle}>Geleend</span>
+                        <ul>
+                          {card.loans.map((loan, i) => <ul key={i} className={styles.actionTotalItem}>
+                            <li>{loan.name}</li>
+                            <li>{loan.amount}</li>
+                          </ul>)}
+                        </ul>
+                      </div>
+                    }
+                  </div>
+                  <span className={styles.actionTitle}>Logs</span>
+                  <ul>
+                    {card.actions.map((action, i) => <ul key={i} className={styles.actionItem}>
+                      <li>{action.name}</li>
+                      <li>{this.formatActionIcon(action.action)}</li>
+                      <li>{this.formatTime(action.timestamp)}</li>
+                    </ul>)}
+                  </ul>
+                </div>
+              }
             </div>
           </div>
         }

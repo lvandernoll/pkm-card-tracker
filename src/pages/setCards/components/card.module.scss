@@ -245,6 +245,37 @@
     margin-top: 25px;
   }
 
+  &Total {
+    width: -webkit-fill-available;
+    margin: 0 20px 20px 0;
+
+    &Wrapper {
+      display: flex;
+
+      @media only screen and (min-width: 640px) and (max-width: 735px) {
+        flex-direction: column;
+      }
+    }
+
+    &Item {
+      display: grid;
+      grid-template-columns: 50% 50%;
+    }
+
+    &:nth-child(2) {
+      width: 100%;
+      margin: 0 0 20px 20px;
+
+      @media only screen and (min-width: 640px) and (max-width: 735px) {
+        width: unset;
+      }
+    }
+
+    @media only screen and (min-width: 640px) and (max-width: 735px) {
+      margin: 0 0 20px 0 !important;
+    }
+  }
+
   &Item {
     margin-top: 10px;
     display: grid;

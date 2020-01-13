@@ -52,7 +52,7 @@ class SetListPage extends Component {
             <img className={styles.image} alt='' src={set.logoUrl} />
             <span className={styles.name}>{set.name}</span>
             <span className={styles.percentage}>{Math.round(set.owned_cards / set.totalCards * 10000) / 100}%</span>
-            <span className={styles.amount}>{set.owned_cards}/{set.totalCards}</span>
+            <span className={styles.amount}>{set.owned_cards_sr}/{set.totalCards}</span>
           </article>
         </Link>
       )}
