@@ -1,10 +1,11 @@
 .card {
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   width: 250px;
   height: 340px;
   position: relative;
-  box-shadow: 0 0 10px lightgrey;
+  box-shadow: 0 0 10px rgba(black, .2);
   border-radius: 15px;
 
   @media only screen and (max-width: 1040px) {
@@ -52,13 +53,13 @@
   height: 50px !important;
   width: 50px !important;
   position: absolute;
-  bottom: 20%;
   cursor: pointer;
   background-color: #20519d;
   color: white;
   padding: 15px;
   border-radius: 50%;
   user-select: none;
+  bottom: 20%;
 
   &:hover {
     background-color: darken(#20519d, 20%);
@@ -76,4 +77,222 @@
   &Right {
     right: 10%;
   }
+
+  &Big {
+    z-index: 103;
+    bottom: 10%;
+    height: 100px !important;
+    width: 100px !important;
+    padding: 25px;
+
+    @media only screen and (max-width: 640px) {
+      zoom: .7;
+    }
+
+    &Left {
+      left: 10%;
+    }
+
+    &Right {
+      Right: 10%;
+    }
+  }
+}
+
+.detail {
+  &Wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 100;
+    background: rgba(black, .8);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    padding: 35px 10px;
+    text-align: center;
+
+    @media only screen and (max-width: 640px) {
+      flex-direction: column;
+      overflow-y: auto;
+      display: block;
+    }
+  }
+
+  &Img {
+    border-radius: 15px;
+
+    &Wrapper {
+      position: relative;
+      display: inline-flex;
+      height: 80%;
+      box-shadow: 10px 0 5px -2px rgba(black, .2);
+      z-index: 102;
+      border-radius: 15px;
+      background: white;
+
+      @media only screen and (max-width: 640px) {
+        width: 80%;
+        height: auto;
+        margin: 0 auto;
+        box-shadow: 0 10px 5px -2px rgba(black, .2);
+      }
+    }
+
+    height: 100%;
+
+    @media only screen and (max-width: 640px) {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &Info {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    height: 80%;
+    width: 40%;
+    margin-left: -20px;
+    padding: 20px 20px 20px 40px;
+    z-index: 90;
+    overflow-y: auto;
+    border-radius: 0 15px 15px 0;
+    text-align: left;
+
+    @media only screen and (max-width: 640px) {
+      height: unset;
+      padding: 30px 10px 10px 10px;
+      width: 80%;
+      margin: -20px auto 0 auto;
+      border-radius: 0 0 15px 15px;
+    }
+  }
+
+  &Name {
+    font-size: 2rem;
+    width: 100%;
+    display: block;
+    padding-right: 50px;
+  }
+
+  &Amount {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    background-color: #fec107;
+    height: 75px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    border-radius: 0 15px 0 15px;
+
+    @media only screen and (max-width: 640px) {
+      border-radius: 0 0 0 15px;
+      height: 88px;
+      padding-top: 10px;
+      z-index: 103;
+
+      &.noBorder {
+        border-radius: 0;
+      }
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.spinner {
+  animation: rotation 2s infinite linear;
+  width: 25px !important;
+  height: 25px;
+
+  &Wrapper {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    z-index: 102;
+    border-radius: 15px;
+    box-shadow: 10px 0 5px -2px rgba(black, .2);
+    background: white;
+    min-width: 350px;
+
+    @media only screen and (max-width: 640px) {
+      width: 80%;
+      min-height: 90%;
+      min-width: unset;
+      margin: 0 auto;
+      box-shadow: 0 10px 5px -2px lightgrey;
+    }
+  }
+}
+
+.action {
+  &Title {
+    font-weight: bold;
+  }
+
+  &Wrapper {
+    margin-top: 25px;
+  }
+
+  &Total {
+    width: -webkit-fill-available;
+    margin: 0 20px 20px 0;
+
+    &Wrapper {
+      display: flex;
+
+      @media only screen and (min-width: 640px) and (max-width: 735px) {
+        flex-direction: column;
+      }
+    }
+
+    &Item {
+      display: grid;
+      grid-template-columns: 50% 50%;
+    }
+
+    &:nth-child(2) {
+      width: 100%;
+      margin: 0 0 20px 20px;
+
+      @media only screen and (min-width: 640px) and (max-width: 735px) {
+        width: unset;
+      }
+    }
+
+    @media only screen and (min-width: 640px) and (max-width: 735px) {
+      margin: 0 0 20px 0 !important;
+    }
+  }
+
+  &Item {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 40% 20% 40%;
+
+    li:nth-child(2) {
+      text-align: center;
+      color: #20519d;
+    }
+
+    li:last-child {
+      text-align: right;
+    }
+  }
+}
+
+@keyframes rotation {
+  from { transform: rotate(0deg) }
+  to { -webkit-transform: rotate(359deg) }
 }

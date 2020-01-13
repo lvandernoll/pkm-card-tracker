@@ -1,30 +1,47 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, withRouter } from 'react-router-dom';
+import { userIsAuthenticatedRedir, userIsNotAuthenticatedRedir, userIsAuthenticated } from 'auth';
+import { logout } from 'actions/user';
+
+// Styling
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
+import styles from './App.module.scss';
+
+// Pages
 import SetListPage from 'pages/setList';
 import SetCardsPage from 'pages/setCards';
 import LoginPage from 'pages/login';
-import Header from 'components/header';
-import styles from './App.module.scss';
 
-const App = props =>
-  <BrowserRouter className={styles.app}>
+// Set up components with authentication
+const Login = withRouter(userIsNotAuthenticatedRedir(LoginPage));
+const SetList = withRouter(userIsAuthenticatedRedir(SetListPage));
+const SetCards = withRouter(userIsAuthenticatedRedir(SetCardsPage));
+const LogoutLink = userIsAuthenticated(({ logout }) => <FontAwesomeIcon className={styles.headerIcon} icon={faUser} onClick={() => logout()} />);
+
+const App = ({ logout }) =>
+  <Router className={styles.app}>
     <div className={styles.app}>
-      <Header />
+      <header className={styles.header}>
+        <Link to='/'><h1>Pokémon Card Tracker</h1></Link>
+        <LogoutLink logout={logout} />
+      </header>
       <main className={styles.main}>
         <Switch>
           <Route exact path='/set/:set'>
-            <SetCardsPage />
+            <SetCards />
           </Route>
           <Route exact path='/login'>
-            <LoginPage />
+            <Login />
           </Route>
           <Route path='/'>
-            <SetListPage />
+            <SetList />
           </Route>
         </Switch>
       </main>
       <footer className={styles.footer} />
     </div>
-  </BrowserRouter>;
+  </Router>;
 
-export default App;
+export default connect(state => ({ user: state.user }), { logout })(App);

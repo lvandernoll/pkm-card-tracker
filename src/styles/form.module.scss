@@ -29,6 +29,10 @@ $error: red;
     background-color: $white;
   }
 
+  > svg {
+    animation: rotation 2s infinite linear;
+  }
+
   &:hover, &:focus {
     text-decoration: none;
     transform: scale(1.1);
@@ -66,25 +70,8 @@ button {
     display: block;
   }
 
-  > span.errorLabel {
-    display: block;
-    font-size: $error-font-size;
-    margin-top: 5px;
-    color: $error;
-    max-width: 100%;
-  }
-
   .input {
     width: 100%;
-    margin-bottom: errorFontHeight(5px);
-
-    &.error {
-      margin-bottom: 0;
-
-      &:focus {
-        margin-bottom: errorFontHeight(5px);
-      }
-    }
   }
 }
 
@@ -102,10 +89,6 @@ button {
 
   &:focus {
     border-color: $main;
-
-    ~ .errorLabel {
-      display: none;
-    }
   }
   
   &:read-only {
@@ -156,4 +139,15 @@ input[data-type="password"] {
   &.active &Icon {
     width: 20px !important;
   }
+}
+
+.errorLabel {
+  color: $error;
+  display: block;
+  margin: 20px 0;
+}
+
+@keyframes rotation {
+  from { transform: rotate(0deg) }
+  to { -webkit-transform: rotate(359deg) }
 }

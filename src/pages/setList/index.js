@@ -1,21 +1,62 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import sets from 'data/sets.json';
 import styles from './setList.module.scss';
 
-const SetListPage = () =>
-  <section className={styles.page}>
-    {sets.map((set, i) =>
-      <Link key={i} to={`/set/${set.name}`}>
-        <article className={styles.set}>
-          <img className={styles.image} alt='' src={set.logoUrl} />
-          <span className={styles.name}>{set.name}</span>
-          <span className={styles.percentage}>100%</span>
-          <span className={styles.amount}>200/200</span>
-        </article>
-      </Link>
-    )}
-  </section>;
+class SetListPage extends Component {
+  constructor(props) {
+    super(props);
 
-export default SetListPage;
+    this.state = {
+      isLoading: false,
+      sets: [],
+    };
+  }
 
+  componentDidMount() {
+    this.setState({ isLoading: true });
+    fetch(`${process.env.REACT_APP_API_URL}/set/`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Token ${this.props.user.data.token}`,
+      },
+    })
+    .then(response => response.json().then(responseJson => {
+      if(response.status === 200) {
+        this.setState({ isLoading: false });
+        const newSets = [];
+        responseJson.forEach(set => {
+         const sameSet = sets.find(obj => obj.name === set.name);
+         if(sameSet) newSets.push({...set, ...sameSet});
+        });
+        this.setState({ sets: newSets });
+      }
+      else {
+        console.error(responseJson);
+        this.setState({ isLoading: false });
+      }
+    }))
+    .catch(e => {
+      console.error(e);
+      this.setState({ isLoading: false });
+    });
+  }
+
+  render = () =>
+    <section className={styles.page}>
+      {this.state.sets.map((set, i) =>
+        <Link key={i} to={`/set/${set.name}`}>
+          <article className={styles.set}>
+            <img className={styles.image} alt='' src={set.logoUrl} />
+            <span className={styles.name}>{set.name}</span>
+            <span className={styles.percentage}>{Math.round(set.owned_cards / set.totalCards * 10000) / 100}%</span>
+            <span className={styles.amount}>{set.owned_cards_sr}/{set.totalCards}</span>
+          </article>
+        </Link>
+      )}
+    </section>;
+}
+
+export default connect(state => ({ user: state.user }))(SetListPage);
