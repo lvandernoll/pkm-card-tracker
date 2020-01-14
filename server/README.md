@@ -40,6 +40,7 @@ What do we need?
 {
   "name": "Alolan Muk",
   "imageUrl": "https://images.pokemontcg.io/sm12/131.png",
+  "imageUrlHiRes": "https://images.pokemontcg.io/sm12/131_hires.png",
   "types": [
     "Darkness"
   ],
