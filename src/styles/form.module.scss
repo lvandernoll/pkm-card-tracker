@@ -104,7 +104,7 @@ button {
   }
 }
 
-input[type="text"], input[type="email"], input[type="tel"] {
+input[type="text"], input[type="email"], input[type="tel"], input[type="search"] {
   @extend .input;
 }
 
