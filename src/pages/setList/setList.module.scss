@@ -16,6 +16,7 @@
 }
 
 .set {
+  position: relative;
   transition: transform .2s;
   display: flex;
   flex-direction: column;
@@ -51,8 +52,15 @@
   margin-bottom: 5px;
 }
 
+.symbol {
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  height: 30px;
+  width: 30px;
+}
+
 .percentage {
-  width: 100%;
   display: flex;
   justify-content: center;
   font-size: 2rem;

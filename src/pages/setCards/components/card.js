@@ -130,6 +130,8 @@ class Card extends Component {
     return <FontAwesomeIcon icon={icon} />
   }
 
+  userHasLoan = () => !!this.state.card.loans.find(obj => obj.name === this.props.user.data.name);
+
   render = () => {
     const { card, count, detailLoaded } = this.state;
 
@@ -147,7 +149,7 @@ class Card extends Component {
               {!this.state.detailedImgLoaded && <div className={styles.spinnerWrapper}><FontAwesomeIcon className={styles.spinner} icon={faSpinner} /></div>}
               <img className={`${styles.detailImg} ${this.state.detailedImgLoaded ? '' : styles.hidden}`} src={card.imageUrlHiRes} alt='detail' onLoad={this.onDetailLoad} />
               {count !== 0 && <FontAwesomeIcon className={`${styles.button} ${styles.buttonBig} ${styles.buttonBigLeft}`} icon={faHandPaper} onClick={() => this.action('loan')} />}
-              <FontAwesomeIcon className={`${styles.button} ${styles.buttonBig} ${styles.buttonBigRight}`} icon={faHandPointLeft} onClick={() => this.action('return')} />
+              {(detailLoaded && this.userHasLoan()) && <FontAwesomeIcon className={`${styles.button} ${styles.buttonBig} ${styles.buttonBigRight}`} icon={faHandPointLeft} onClick={() => this.action('return')} />}
             </div>
             <div className={styles.detailInfo}>
               <div>

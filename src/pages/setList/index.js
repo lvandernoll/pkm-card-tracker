@@ -28,8 +28,9 @@ class SetListPage extends Component {
         this.setState({ isLoading: false });
         const newSets = [];
         responseJson.forEach(set => {
-         const sameSet = sets.find(obj => obj.name === set.name);
-         if(sameSet) newSets.push({...set, ...sameSet});
+          const sameSet = sets.find(obj => obj.name === set.name);
+          const index = sets.findIndex(obj => obj === sameSet);
+          if(sameSet) newSets[index] = {...set, ...sameSet};
         });
         this.setState({ sets: newSets });
       }
@@ -53,6 +54,7 @@ class SetListPage extends Component {
             <span className={styles.name}>{set.name}</span>
             <span className={styles.percentage}>{Math.round(set.owned_cards / set.totalCards * 10000) / 100}%</span>
             <span className={styles.amount}>{set.owned_cards_sr}/{set.totalCards}</span>
+            <img className={styles.symbol} alt='' src={set.symbolUrl} />
           </article>
         </Link>
       )}

@@ -5,7 +5,7 @@ import { logout } from 'actions/user';
 
 // Styling
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import styles from './App.module.scss';
 
@@ -18,7 +18,7 @@ import LoginPage from 'pages/login';
 const Login = withRouter(userIsNotAuthenticatedRedir(LoginPage));
 const SetList = withRouter(userIsAuthenticatedRedir(SetListPage));
 const SetCards = withRouter(userIsAuthenticatedRedir(SetCardsPage));
-const LogoutLink = userIsAuthenticated(({ logout }) => <FontAwesomeIcon className={styles.headerIcon} icon={faUser} onClick={() => logout()} />);
+const LogoutLink = userIsAuthenticated(({ logout }) => <FontAwesomeIcon className={styles.headerIcon} icon={faSignOutAlt} onClick={() => logout()} />);
 
 const App = ({ logout }) =>
   <Router className={styles.app}>
