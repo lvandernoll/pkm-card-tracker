@@ -13,13 +13,18 @@ class SetCardsPage extends Component {
     this.state = {
       isLoading: false,
       cards: [],
+      filteredCards: [],
       set: 0,
       search: '',
       mobileSearchActive: false,
+      showMobileSearch: false,
     };
   }
 
   componentDidMount = async () => {
+    document.addEventListener('scroll', this.updateMobileSearch);
+    this.updateMobileSearch();
+
     const setName = this.props.location.pathname.split('/set/').join('');
     let cards;
     try {
@@ -46,7 +51,7 @@ class SetCardsPage extends Component {
           const sameCard = cards.find(obj => obj.number == card.number);
           if(sameCard) newCards.push({...card, ...sameCard});
         });
-        this.setState({ cards: newCards });
+        this.setState({ filteredCards: newCards, cards: newCards });
       }
       else {
         console.error(responseJson);
@@ -59,34 +64,42 @@ class SetCardsPage extends Component {
     });
   }
 
-  onChangeSearch = e => this.setState({ search: e.currentTarget.value });
+  updateMobileSearch = () => this.setState({ showMobileSearch: window.scrollY > 50 || window.innerWidth <= 640});
+
+  onChangeSearch = e => {
+    const search = e.currentTarget.value;
+    if(search !== '') {
+      const filteredCards = this.state.cards.filter(card => card.name.toLowerCase().includes(search.toLowerCase()) || card.number == search);
+      this.setState({ filteredCards });
+    }
+    this.setState({ search });
+  }
 
   openSearch = () => {
-    if(!this.state.mobileSearchActive) {
-      this.setState({ mobileSearchActive: true });
-    }
+    if(!this.state.mobileSearchActive)  this.setState({ mobileSearchActive: true });
   }
 
   closeSearch = () => this.setState({ mobileSearchActive: false });
 
   render = () => {
-    const { cards, set, mobileSearchActive } = this.state;
+    const { cards, filteredCards, set, mobileSearchActive, search, showMobileSearch } = this.state;
+    const cardsView = search === '' ? cards : filteredCards;
 
     return (
       <section className={styles.page}>
-        <div className={styles.headerSearch}>
+        <div ref='headerSearch' className={styles.headerSearch}>
           <label className={`${form.inputWrapper} ${styles.headerSearchWrapper}`} htmlFor='headerSearch'>
             <input type='text' id='headerSearch' value={this.state.search} onChange={this.onChangeSearch} className={styles.headerSearchInput} />
             <FontAwesomeIcon className={styles.headerSearchIcon} icon={faSearch} />
           </label>
         </div>
-        {cards.map((card, i) => <Card key={i} card={card} set={set} />)}
-        <div onClick={this.openSearch} className={styles.mobileSearch}>
+        {cardsView.map((card) => <Card key={cards.findIndex(obj => obj === card)} card={card} set={set} />)}
+        {showMobileSearch && <div onClick={this.openSearch} className={styles.mobileSearch}>
           <label className={`${form.inputWrapper} ${styles.mobileSearchWrapper}`} htmlFor='mobileSearch'>
             <input type='text' id='mobileSearch' value={this.state.search} onBlur={this.closeSearch} onChange={this.onChangeSearch} className={`${styles.mobileSearchInput} ${mobileSearchActive ? styles.mobileSearchInputActive : ''}`} />
             <FontAwesomeIcon className={`${styles.mobileSearchIcon} ${mobileSearchActive ? styles.mobileSearchIconActive : ''}`} icon={faSearch} />
           </label>
-        </div>
+        </div>}
       </section>
     );
   }
