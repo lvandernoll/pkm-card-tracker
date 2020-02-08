@@ -147,6 +147,11 @@ input[data-type="password"] {
   margin: 20px 0;
 }
 
+.successLabel {
+  @extend .errorLabel;
+  color: $main;
+}
+
 @keyframes rotation {
   from { transform: rotate(0deg) }
   to { -webkit-transform: rotate(359deg) }

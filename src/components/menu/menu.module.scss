@@ -1,0 +1,32 @@
+.menu {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #20519d;
+  padding: 10px;
+  min-width: 200px;
+
+
+  &Item {
+    padding: 10px 0;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+
+    > a {
+      color: #20519d;
+    }
+
+    &:hover {
+      color: black;
+    }
+
+    &:not(:last-child) {
+      border-bottom: 2px solid #20519d;
+    }
+  }
+
+  &Icon {
+    margin-right: 10px;
+  }
+}
