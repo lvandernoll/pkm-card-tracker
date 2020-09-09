@@ -35,7 +35,7 @@ class SetCardsPage extends Component {
     }
 
     this.setState({ isLoading: true });
-    fetch(`${process.env.REACT_APP_API_URL}/set/${setName}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/set/${setName}/`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
