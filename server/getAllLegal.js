@@ -15,7 +15,8 @@ fetch('https://api.pokemontcg.io/v1/sets?standardLegal=true')
       logoUrl: setData.logoUrl,
     };
     console.log(`Fetching all ${setData.name} cards..`);
-    fetch(`https://api.pokemontcg.io/v1/cards?set=${setData.name}&pageSize=1000`)
+    const setName = setData.name.split("'").join('');
+    fetch(`https://api.pokemontcg.io/v1/cards?set=${setName}&pageSize=1000`)
     .then(response => response.json())
     .then(data => {
       const cardsArray = [];
