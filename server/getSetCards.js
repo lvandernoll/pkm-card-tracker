@@ -1,6 +1,12 @@
 const fetch = require('node-fetch');
 const fs = require('fs');
 
+const authHeaders = {
+  headers: {
+    'X-API-Key': ''
+  }
+};
+
 process.argv.shift();
 process.argv.shift();
 const setName = process.argv.join(' ');
@@ -11,11 +17,11 @@ if(setName === '') {
 }
 
 console.log('Fetching all standard sets..');
-fetch(`https://api.pokemontcg.io/v1/sets?name=${setName}`)
+fetch(`https://api.pokemontcg.io/v2/sets?name=${setName}`, authHeaders)
 .then(response => response.json())
 .then(data => {
-  if(!data.sets[0]) throw `No set with name '${setName}'`;
-  const setData = data.sets[0];
+  if(!data.data[0]) throw `No set with name '${setName}'`;
+  const setData = data.data[0];
   const set = {
     code: setData.ptcgoCode,
     name: setData.name,
@@ -25,11 +31,11 @@ fetch(`https://api.pokemontcg.io/v1/sets?name=${setName}`)
     logoUrl: setData.logoUrl,
   };
   console.log(`Fetching all ${setName} cards..`);
-  fetch(`https://api.pokemontcg.io/v1/cards?set=${setName}&pageSize=1000`)
+  fetch(`https://api.pokemontcg.io/v2/cards?set=${setName}&pageSize=1000`, authHeaders)
   .then(response => response.json())
   .then(data => {
     const cardsArray = [];
-    data.cards.forEach(card => {
+    data.data.forEach(card => {
       cardsArray.push({
         name: card.name,
         imageUrl: card.imageUrl,

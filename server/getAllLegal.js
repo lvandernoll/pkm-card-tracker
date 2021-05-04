@@ -1,11 +1,17 @@
 const fetch = require('node-fetch');
 const fs = require('fs');
 
+const authHeaders = {
+  headers: {
+    'X-API-Key': ''
+  }
+};
+
 console.log('Fetching all standard sets..');
-fetch('https://api.pokemontcg.io/v1/sets?standardLegal=true')
+fetch('https://api.pokemontcg.io/v2/sets?q=legalities.standard:legal', authHeaders)
 .then(response => response.json())
 .then(data => {
-  data.sets.forEach(setData => {
+  data.data.forEach(setData => {
     const set = {
       code: setData.ptcgoCode,
       name: setData.name,
@@ -16,11 +22,11 @@ fetch('https://api.pokemontcg.io/v1/sets?standardLegal=true')
     };
     console.log(`Fetching all ${setData.name} cards..`);
     const setName = setData.name.split("'").join('');
-    fetch(`https://api.pokemontcg.io/v1/cards?set=${setName}&pageSize=1000`)
+    fetch(`https://api.pokemontcg.io/v2/cards?set=${setName}&pageSize=1000`, authHeaders)
     .then(response => response.json())
     .then(data => {
       const cardsArray = [];
-      data.cards.forEach(card => {
+      data.data.forEach(card => {
         cardsArray.push({
           name: card.name,
           imageUrl: card.imageUrl,

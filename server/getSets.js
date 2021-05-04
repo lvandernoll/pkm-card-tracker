@@ -1,12 +1,18 @@
 const fetch = require('node-fetch');
 const fs = require('fs');
 
+const authHeaders = {
+  headers: {
+    'X-API-Key': ''
+  }
+};
+
 console.log('Fetching all standard sets..');
-fetch('https://api.pokemontcg.io/v1/sets?standardLegal=true&pageSize=1000')
+fetch('https://api.pokemontcg.io/v2/sets?q=legalities.standard:legal&pageSize=1000', authHeaders)
 .then(response => response.json())
 .then(data => {
   const setsArray = [];
-  data.sets.forEach(set => {
+  data.data.forEach(set => {
     setsArray.push({
       ptcgoCode: set.ptcgoCode,
       name: set.name,
