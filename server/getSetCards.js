@@ -31,15 +31,15 @@ fetch(`https://api.pokemontcg.io/v2/sets?name=${setName}`, authHeaders)
     logoUrl: setData.logoUrl,
   };
   console.log(`Fetching all ${setName} cards..`);
-  fetch(`https://api.pokemontcg.io/v2/cards?set=${setName}&pageSize=1000`, authHeaders)
+  fetch(`https://api.pokemontcg.io/v2/cards?q=set.name:"${setName}"&pageSize=1000`, authHeaders)
   .then(response => response.json())
   .then(data => {
     const cardsArray = [];
     data.data.forEach(card => {
       cardsArray.push({
         name: card.name,
-        imageUrl: card.imageUrl,
-        imageUrlHiRes: card.imageUrlHiRes,
+        imageUrl: card.images.small,
+        imageUrlHiRes: card.images.large,
         types: card.types,
         supertype: card.supertype,
         number: card.number,

@@ -22,15 +22,17 @@ fetch('https://api.pokemontcg.io/v2/sets?q=legalities.standard:legal', authHeade
     };
     console.log(`Fetching all ${setData.name} cards..`);
     const setName = setData.name.split("'").join('');
-    fetch(`https://api.pokemontcg.io/v2/cards?set=${setName}&pageSize=1000`, authHeaders)
+    fetch(`https://api.pokemontcg.io/v2/cards?q=set.id:"${setData.id}"&pageSize=1000`, authHeaders)
     .then(response => response.json())
     .then(data => {
       const cardsArray = [];
+      if(!data.data) {
+      }
       data.data.forEach(card => {
         cardsArray.push({
           name: card.name,
-          imageUrl: card.imageUrl,
-          imageUrlHiRes: card.imageUrlHiRes,
+          imageUrl: card.images.small,
+          imageUrlHiRes: card.images.large,
           types: card.types,
           supertype: card.supertype,
           number: card.number,
