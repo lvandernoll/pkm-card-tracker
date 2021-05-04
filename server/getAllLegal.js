@@ -21,7 +21,6 @@ fetch('https://api.pokemontcg.io/v2/sets?q=legalities.standard:legal', authHeade
       logoUrl: setData.logoUrl,
     };
     console.log(`Fetching all ${setData.name} cards..`);
-    const setName = setData.name.split("'").join('');
     fetch(`https://api.pokemontcg.io/v2/cards?q=set.id:"${setData.id}"&pageSize=1000`, authHeaders)
     .then(response => response.json())
     .then(data => {
