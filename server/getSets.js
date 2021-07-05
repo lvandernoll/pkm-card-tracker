@@ -17,10 +17,10 @@ fetch('https://api.pokemontcg.io/v2/sets?q=legalities.standard:legal&pageSize=10
       ptcgoCode: set.ptcgoCode,
       name: set.name,
       series: set.series,
-      totalCards: set.totalCards,
-      standardLegal: set.standardLegal,
-      symbolUrl: set.symbolUrl,
-      logoUrl: set.logoUrl,
+      totalCards: set.total,
+      standardLegal: set.legalities.standard === 'Legal',
+      symbolUrl: set.images.symbol,
+      logoUrl: set.images.logo,
     });
   });
   setsArray.reverse();
