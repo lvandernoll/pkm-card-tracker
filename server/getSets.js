@@ -24,6 +24,6 @@ fetch('https://api.pokemontcg.io/v2/sets?q=legalities.standard:legal&pageSize=10
     });
   });
   setsArray.reverse();
-  fs.writeFile('../src/data/sets.json', JSON.stringify(setsArray, 'utf8'), () => {console.log('Sets written to ../src/data/sets.json')});
+  fs.writeFile('../src/data/newSets.json', JSON.stringify(setsArray, 'utf8'), () => {console.log('Sets written to ../src/data/newSets.json')});
 })
 .catch(console.error);
