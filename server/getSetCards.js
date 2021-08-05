@@ -44,6 +44,9 @@ fetch(`https://api.pokemontcg.io/v2/sets?name=${setName}`, authHeaders)
         supertype: card.supertype,
         number: card.number,
         rarity: card.rarity,
+        cardmarketUrl: card.cardmarket ? card.cardmarket.url : undefined,
+        price: card.cardmarket ? card.cardmarket.prices.averageSellPrice : undefined,
+        priceUpdatedAt: card.cardmarket ? card.cardmarket.updatedAt : undefined,
       });
     });
     cardsArray.sort((a, b) => a.number - b.number);

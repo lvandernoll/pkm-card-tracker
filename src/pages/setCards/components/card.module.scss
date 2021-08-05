@@ -172,11 +172,25 @@
     }
   }
 
+  &InfoContent {
+    display: flex;
+    flex-direction: column;
+    padding-right: 50px;
+    word-break: break-all;
+  }
+
   &Name {
     font-size: 2rem;
-    width: 100%;
-    display: block;
-    padding-right: 50px;
+    color: #20519d;
+  }
+
+  &Rarity {
+    margin: .5em 0;
+  }
+
+  &PriceDate {
+    color: rgba(black, .6);
+    font-style: italic;
   }
 
   &Amount {

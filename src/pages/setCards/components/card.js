@@ -30,7 +30,7 @@ class Card extends Component {
     .then(response => {
       if(response.status === 204) {
         switch(actionName) {
-          case 'add': 
+          case 'add':
           this.setState({ count: this.state.count + 1 });
           break;
           case 'remove':
@@ -152,10 +152,11 @@ class Card extends Component {
               {(detailLoaded && this.userHasLoan()) && <FontAwesomeIcon className={`${styles.button} ${styles.buttonBig} ${styles.buttonBigRight}`} icon={faHandPointLeft} onClick={() => this.action('return')} />}
             </div>
             <div className={styles.detailInfo}>
-              <div>
-                <span className={styles.detailName}>{card.name}#{card.number}</span>
+              <div className={styles.detailInfoContent}>
+                <a href={card.cardmarketUrl} target="_blank" className={styles.detailName}>{card.name}#{card.number}</a>
                 <div className={`${styles.detailAmount} ${detailLoaded && card.actions.length < 1 ? styles.noBorder : ''}`}>{this.state.count}</div>
-                <span>{card.rarity}</span>
+                <span className={styles.detailRarity}>{card.rarity}</span>
+                {card.price && <span>€{card.price} <i className={styles.detailPriceDate}>({card.priceUpdatedAt})</i></span>}
               </div>
               {(detailLoaded && card.actions.length > 0) &&
                 <div className={styles.actionWrapper}>
