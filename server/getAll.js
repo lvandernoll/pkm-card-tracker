@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const authHeaders = {
   headers: {
-    'X-API-Key': 'bca479b9-bd4a-4985-b8cd-38ad09682ff5'
+    'X-API-Key': ''
   }
 };
 
