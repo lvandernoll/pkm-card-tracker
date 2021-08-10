@@ -27,12 +27,6 @@ class SetCardsPage extends Component {
 
     const setName = this.props.location.pathname.split('/set/').join('');
     let cards;
-    try {
-      cards = await require(`data/${setName}.json`);
-      if(cards) cards = cards.cards;
-    } catch (e) {
-      this.props.history.goBack();
-    }
 
     this.setState({ isLoading: true });
     fetch(`${process.env.REACT_APP_API_URL}/set/${setName}/`, {
@@ -42,16 +36,23 @@ class SetCardsPage extends Component {
         'Authorization': `Token ${this.props.user.data.token}`,
       },
     })
-    .then(response => response.json().then(responseJson => {
+    .then(response => response.json().then(async (responseJson) => {
       if(response.status === 200) {
-        this.setState({ isLoading: false, set: responseJson.id });
-        const newCards = [];
-        responseJson.cards.forEach(card => {
-          // eslint-disable-next-line
-          const sameCard = cards.find(obj => obj.number == card.number);
-          if(sameCard) newCards.push({...card, ...sameCard});
-        });
-        this.setState({ filteredCards: newCards, cards: newCards });
+        try {
+          cards = await require(`data/${responseJson.code || 'NULL'}-${responseJson.name}.json`);
+          if(cards) cards = cards.cards;
+
+          this.setState({ isLoading: false, set: responseJson.id });
+          const newCards = [];
+          responseJson.cards.forEach(card => {
+            // eslint-disable-next-line
+            const sameCard = cards.find(obj => obj.number == card.number);
+            if(sameCard) newCards.push({...card, ...sameCard});
+          });
+          this.setState({ filteredCards: newCards, cards: newCards });
+        } catch (e) {
+          this.props.history.goBack();
+        }
       }
       else {
         console.error(responseJson);
