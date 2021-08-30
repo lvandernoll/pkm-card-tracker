@@ -17,6 +17,7 @@ fetch('https://api.pokemontcg.io/v2/sets', authHeaders)
       if (new Date(setData.releaseDate) >= new Date("2019/05/02")) {
         const set = {
           ptcgoCode: setData.ptcgoCode,
+          code: setData.ptcgoCode,
           name: setData.name,
           series: setData.series,
           totalCards: setData.total,
